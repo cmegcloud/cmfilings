@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CM Filings – Experts in Tax & Business Compliance</title>
+  
+  <link rel="icon" href="logo-cmfilings.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#E30613">
+  <link rel="apple-touch-icon" href="logo-cmfilings.png">
+  
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#E30613',
+            'brand-dark': '#B3000B',
+            dark: '#111827', 
+            light: '#F9FAFB' 
+          },
+          fontFamily: {
+            heading: ['Poppins', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          animation: {
+            'pulse-logo': 'pulse-logo 1.5s ease-in-out infinite'
+          },
+          keyframes: {
+            'pulse-logo': {
+              '0%, 100%': { transform: 'scale(0.95)', opacity: '0.8' },
+              '50%': { transform: 'scale(1.05)', opacity: '1' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; color: #374151; }
+    .font-heading { font-family: 'Poppins', sans-serif; }
+
+    /* Animated Logo Loader */
+    #loader { position: fixed; inset: 0; background: #ffffff; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
+    #loader.hidden { opacity: 0; pointer-events: none; }
+    
+    /* Welcome Modal */
+    #welcomeOverlay { transition: opacity 0.5s ease, visibility 0.5s; visibility: hidden; opacity: 0; }
+    #welcomeOverlay.show { visibility: visible; opacity: 1; }
+    #welcomeOverlay .modal-content { transform: scale(0.95); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    #welcomeOverlay.show .modal-content { transform: scale(1); }
+
+    /* Navbar */
+    #navbar { transition: background 0.3s, box-shadow 0.3s, padding 0.3s; }
+    #navbar.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+
+    /* Utilities */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .counter-num { font-variant-numeric: tabular-nums; }
+    .testimonial-track { display: flex; transition: transform 0.5s ease; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+    .faq-answer.open { max-height: 300px; }
+    #mobileMenu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    #mobileMenu.open { max-height: 500px; }
+
+    /* Floating Buttons & Toast */
+    .wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 900; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.3); cursor: pointer; transition: transform 0.2s; }
+    .wa-float:hover { transform: scale(1.1); }
+    #scrollTop { position: fixed; bottom: 90px; right: 24px; z-index: 900; width: 44px; height: 44px; border-radius: 50%; background: #E30613; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(227,6,19,0.3); transition: opacity 0.3s; }
+    #scrollTop.show { display: flex; }
+    
+    #updateToast { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease; }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+<body class="h-full bg-white text-gray-700">
+
+  <div id="loader">
+    <img src="logo-cmfilings.png" alt="CM Filings Processing..." class="h-24 w-auto object-contain animate-pulse-logo mb-6">
+    <div class="flex items-center gap-2 text-brand font-heading font-semibold tracking-widest text-sm uppercase">
+      Processing <span class="flex gap-1"><span class="animate-bounce">.</span><span class="animate-bounce" style="animation-delay: 0.1s">.</span><span class="animate-bounce" style="animation-delay: 0.2s">.</span></span>
+    </div>
+  </div>
+
+  <div id="welcomeOverlay" class="fixed inset-0 z-[60000] bg-dark/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center relative border border-gray-100">
+      <button onclick="closeWelcome()" class="absolute top-4 right-4 text-gray-400 hover:text-dark transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <img src="logo-cmfilings.png" alt="Logo" class="h-16 mx-auto mb-6">
+      <h2 class="font-heading font-bold text-2xl text-dark mb-3">Welcome to <span class="font-normal">CM</span> Filings!</h2>
+      <p class="text-gray-600 mb-8 leading-relaxed">Your trusted partner for expert tax compliance, strategic business registrations, and seamless financial growth.</p>
+      <button onclick="closeWelcome()" class="w-full bg-brand hover:bg-brand-dark text-white font-bold py-3.5 px-6 rounded-lg shadow-md transition">Continue to Website</button>
+    </div>
+  </div>
+
+  <div id="updateToast" class="fixed bottom-6 left-6 z-[950] bg-white border border-gray-100 rounded-2xl shadow-2xl p-5 max-w-sm w-[calc(100%-3rem)] transform translate-y-40 opacity-0 flex flex-col gap-3">
+    <button onclick="closeUpdate()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition" aria-label="Close update">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div class="flex items-center gap-2 mb-1">
+      <span class="flex h-3 w-3 relative">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-brand"></span>
+      </span>
+      <h4 class="font-heading font-bold text-dark text-sm uppercase tracking-wide">Latest Update</h4>
+    </div>
+    <p class="text-gray-600 text-sm leading-relaxed"><strong>Income Tax Return Filing FY 2025-26</strong> has started! File Now to avoid late fees and interest.</p>
+    <a href="https://wa.me/919946151111?text=Hi,%20I%20Need%20to%20File%20my%20ITR.%20Need%20Help." target="_blank" rel="noopener noreferrer" class="mt-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition w-full shadow-md shadow-green-500/20">
+       <i data-lucide="message-circle" class="w-4 h-4"></i> Chat with Experts
+    </a>
+  </div>
+
+  <nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+      <a href="#hero" class="flex items-center gap-3">
+        <img src="logo-cmfilings.png" alt="CM Filings Logo" class="h-10 w-auto object-contain drop-shadow-sm">
+        <span class="font-heading text-xl text-dark" id="nav-logo-text"><span class="font-normal">CM</span> <span class="font-bold">Filings</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#hero" class="nav-link text-sm font-semibold text-gray-600 hover:text-brand transition">Home</a>
+        <a href="#about" class="nav-link text-sm font-semibold text-gray-600 hover:text-brand transition">About</a>
+        <a href="#services" class="nav-link text-sm font-semibold text-gray-600 hover:text-brand transition">Services</a>
+        <a href="#why" class="nav-link text-sm font-semibold text-gray-600 hover:text-brand transition">Why Us</a>
+        <a href="#contact" class="nav-link text-sm font-semibold text-gray-600 hover:text-brand transition">Contact</a>
+        <a href="https://wa.me/919946151111?text=Hi,%20I%20Need%20to%20File%20my%20ITR.%20Need%20Help." target="_blank" rel="noopener noreferrer" class="bg-brand hover:bg-brand-dark text-white text-sm font-semibold px-6 py-2.5 rounded-lg shadow-md shadow-brand/20 transition">Get Started</a>
+      </div>
+      <button id="menuBtn" class="md:hidden text-dark" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    
+    <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+      <div class="px-4 py-5 flex flex-col gap-4">
+        <a href="#hero" class="mob-link text-sm font-semibold text-gray-700 hover:text-brand">Home</a>
+        <a href="#about" class="mob-link text-sm font-semibold text-gray-700 hover:text-brand">About</a>
+        <a href="#services" class="mob-link text-sm font-semibold text-gray-700 hover:text-brand">Services</a>
+        <a href="#why" class="mob-link text-sm font-semibold text-gray-700 hover:text-brand">Why Us</a>
+        <a href="#contact" class="mob-link text-sm font-semibold text-gray-700 hover:text-brand">Contact</a>
+        <a href="https://wa.me/919946151111?text=Hi,%20I%20Need%20to%20File%20my%20ITR.%20Need%20Help." target="_blank" rel="noopener noreferrer" class="bg-brand text-white text-sm font-semibold px-5 py-3 rounded-lg text-center shadow-md">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app-wrapper" class="w-full h-full overflow-auto pt-20">
+    
+    <section id="hero" class="hero-bg w-full border-b border-gray-100 flex items-center" style="min-height: calc(100vh - 80px);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 bg-white border border-gray-200 shadow-sm rounded-full px-4 py-1.5 mb-6">
+            <span class="w-2 h-2 bg-brand rounded-full animate-pulse"></span>
+            <span class="text-gray-700 text-xs font-semibold tracking-wide">Serving India & UAE</span>
+          </div>
+          <h1 id="heroHeading" class="font-heading font-900 text-5xl sm:text-6xl md:text-7xl text-dark leading-tight mb-4"><span class="font-normal">CM</span> Filings</h1>
+          <p id="heroSub" class="font-heading font-bold text-xl sm:text-2xl text-brand mb-6">Experts in Tax & Business Compliance</p>
+          <p id="heroText" class="text-gray-600 text-lg max-w-xl mb-10 leading-relaxed">Your trusted, professional partner for precise tax management, seamless registrations, and strategic business growth solutions.</p>
+          <div class="flex flex-wrap gap-4 mb-14">
+            <a href="#contact" class="bg-brand hover:bg-brand-dark text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg shadow-brand/20 transition text-sm">Get Started Today</a>
+            <a href="https://wa.me/919946151111?text=Hi,%20I%20Need%20to%20File%20my%20ITR.%20Need%20Help." target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-gray-50 border border-gray-200 text-dark font-semibold px-8 py-3.5 rounded-lg shadow-sm transition text-sm flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-5 h-5 text-green-500"></i>Chat on WhatsApp
+            </a>
+          </div>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-white border border-gray-100 shadow-sm rounded-xl p-5 text-center transition hover:shadow-md">
+              <span class="counter-num font-heading font-bold text-3xl text-dark" data-target="10000">0</span><span class="text-brand font-bold text-2xl">+</span>
+              <p class="text-gray-500 text-xs font-medium mt-1 uppercase tracking-wide">Individuals Served</p>
+            </div>
+            <div class="bg-white border border-gray-100 shadow-sm rounded-xl p-5 text-center transition hover:shadow-md">
+              <span class="counter-num font-heading font-bold text-3xl text-dark" data-target="2000">0</span><span class="text-brand font-bold text-2xl">+</span>
+              <p class="text-gray-500 text-xs font-medium mt-1 uppercase tracking-wide">Businesses Served</p>
+            </div>
+            <div class="bg-white border border-gray-100 shadow-sm rounded-xl p-5 text-center transition hover:shadow-md">
+              <span class="counter-num font-heading font-bold text-3xl text-dark" data-target="15">0</span><span class="text-brand font-bold text-2xl">+</span>
+              <p class="text-gray-500 text-xs font-medium mt-1 uppercase tracking-wide">Years Experience</p>
+            </div>
+            <div class="bg-white border border-gray-100 shadow-sm rounded-xl p-5 text-center flex flex-col items-center justify-center transition hover:shadow-md">
+              <i data-lucide="headphones" class="w-8 h-8 text-brand mb-2"></i>
+              <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">24/7 Support</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="bg-white py-20 md:py-28 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="reveal">
+            <span class="text-brand font-bold text-sm uppercase tracking-wider">About Us</span>
+            <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3 mb-6 leading-tight">Your Compliance,<br>Our Commitment.</h2>
+            <p id="aboutText" class="text-gray-600 text-lg leading-relaxed mb-8">CM Filings is founded by Mohammed Shanid, a commerce professional with 15+ years of practical experience in Tax, GST, Income Tax, Business Registrations, and Compliance services. We help businesses and individuals stay compliant and grow with confidence.</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="flex items-center gap-3 text-sm font-semibold text-dark bg-light p-3 rounded-lg border border-gray-100">
+                <i data-lucide="check-circle" class="w-5 h-5 text-brand"></i>India & UAE Coverage
+              </div>
+              <div class="flex items-center gap-3 text-sm font-semibold text-dark bg-light p-3 rounded-lg border border-gray-100">
+                <i data-lucide="check-circle" class="w-5 h-5 text-brand"></i>10K+ Happy Clients
+              </div>
+              <div class="flex items-center gap-3 text-sm font-semibold text-dark bg-light p-3 rounded-lg border border-gray-100">
+                <i data-lucide="check-circle" class="w-5 h-5 text-brand"></i>Since 2009
+              </div>
+              <div class="flex items-center gap-3 text-sm font-semibold text-dark bg-light p-3 rounded-lg border border-gray-100">
+                <i data-lucide="check-circle" class="w-5 h-5 text-brand"></i>Certified Experts
+              </div>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="bg-light rounded-2xl p-8 relative border border-gray-200 shadow-xl shadow-gray-200/50">
+              <div class="absolute -top-4 -right-4 w-24 h-24 bg-brand/10 rounded-2xl z-0"></div>
+              <div class="relative z-10">
+                <div class="w-20 h-20 bg-brand rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-brand/20">
+                  <i data-lucide="user" class="w-10 h-10 text-white"></i>
+                </div>
+                <h3 class="font-heading font-bold text-2xl text-dark">Mohammed Shanid</h3>
+                <p class="text-brand font-semibold text-sm mt-1 uppercase tracking-wide">Founder | Tax & Compliance Expert</p>
+                <p class="text-gray-600 text-base mt-4 leading-relaxed">15+ years of hands-on expertise in tax planning, GST, registrations, and business compliance across India and UAE.</p>
+                <div class="flex gap-8 mt-8 pt-6 border-t border-gray-200">
+                  <div>
+                    <span class="font-heading font-bold text-3xl text-dark">15<span class="text-brand">+</span></span>
+                    <p class="text-gray-500 font-medium text-xs uppercase tracking-wider mt-1">Years Exp.</p>
+                  </div>
+                  <div>
+                    <span class="font-heading font-bold text-3xl text-dark">2</span>
+                    <p class="text-gray-500 font-medium text-xs uppercase tracking-wider mt-1">Countries</p>
+                  </div>
+                  <div>
+                    <span class="font-heading font-bold text-3xl text-dark">12K<span class="text-brand">+</span></span>
+                    <p class="text-gray-500 font-medium text-xs uppercase tracking-wider mt-1">Clients</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="bg-light border-y border-gray-200 py-20 md:py-28 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <span class="text-brand font-bold text-sm uppercase tracking-wider">Our Services</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3">Comprehensive Business Solutions</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section id="why" class="bg-white py-20 md:py-28 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <span class="text-brand font-bold text-sm uppercase tracking-wider">Why Choose Us</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3">Built on Trust & Expertise</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="whyGrid"></div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="bg-gray-50 border-y border-gray-200 py-20 md:py-28 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal">
+          <span class="text-brand font-bold text-sm uppercase tracking-wider">Customer Reviews</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3 mb-6">What Our Clients Say</h2>
+        </div>
+        <div class="overflow-hidden reveal mt-10">
+          <div class="testimonial-track" id="testimonialTrack"></div>
+          <div class="flex justify-center gap-4 mt-10">
+            <button onclick="moveTestimonial(-1)" class="w-12 h-12 rounded-full bg-white border border-gray-200 hover:border-brand hover:text-brand text-gray-600 flex items-center justify-center transition shadow-sm" aria-label="Previous">
+              <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button onclick="moveTestimonial(1)" class="w-12 h-12 rounded-full bg-white border border-gray-200 hover:border-brand hover:text-brand text-gray-600 flex items-center justify-center transition shadow-sm" aria-label="Next">
+              <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="bg-white py-20 md:py-28 w-full">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <span class="text-brand font-bold text-sm uppercase tracking-wider">FAQ</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3">Frequently Asked Questions</h2>
+        </div>
+        <div id="faqList" class="space-y-4 reveal"></div>
+      </div>
+    </section>
+
+    <section id="career" class="bg-light border-y border-gray-200 py-20 md:py-28 w-full">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+        <span class="text-brand font-bold text-sm uppercase tracking-wider">Careers</span>
+        <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3 mb-6">Career With Us</h2>
+        <p id="careerText" class="text-gray-600 text-lg max-w-2xl mx-auto mb-10">Join our growing professional team. We welcome tax professionals, accountants, designers, and developers.</p>
+        <a href="mailto:career@cmfilings.com" class="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold px-8 py-3.5 rounded-lg shadow-lg shadow-brand/20 transition">
+          <i data-lucide="send" class="w-5 h-5"></i>Apply Now
+        </a>
+      </div>
+    </section>
+
+    <section id="contact" class="bg-white py-20 md:py-28 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-16">
+          <div class="reveal">
+            <span class="text-brand font-bold text-sm uppercase tracking-wider">Contact Us</span>
+            <h2 class="font-heading font-bold text-3xl md:text-5xl text-dark mt-3 mb-10">Let's Talk Business</h2>
+            <div class="space-y-8">
+              <div class="flex items-start gap-5">
+                <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="phone" class="w-6 h-6 text-brand"></i>
+                </div>
+                <div>
+                  <p class="text-gray-500 font-medium text-sm uppercase tracking-wide">Phone / WhatsApp</p>
+                  <p class="text-dark font-bold text-lg mt-1">+91 9946151111</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-5">
+                <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="mail" class="w-6 h-6 text-brand"></i>
+                </div>
+                <div>
+                  <p class="text-gray-500 font-medium text-sm uppercase tracking-wide">Email</p>
+                  <p class="text-dark font-bold text-lg mt-1">support@cmfilings.com</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-5">
+                <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="map-pin" class="w-6 h-6 text-brand"></i>
+                </div>
+                <div>
+                  <p class="text-gray-500 font-medium text-sm uppercase tracking-wide">Address</p>
+                  <p class="text-dark font-bold text-lg mt-1 leading-snug">Kannur Dist, Kerala - 670672, India</p>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-4 mt-12">
+              <a href="mailto:support@cmfilings.com" class="bg-brand hover:bg-brand-dark text-white font-semibold px-6 py-3.5 rounded-lg shadow-md transition text-sm flex items-center gap-2">
+                <i data-lucide="mail" class="w-5 h-5"></i>Email Us
+              </a>
+              <a href="https://wa.me/919946151111?text=Hi,%20I%20Need%20to%20File%20my%20ITR.%20Need%20Help." target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-gray-50 border border-gray-200 text-dark font-semibold px-6 py-3.5 rounded-lg shadow-sm transition text-sm flex items-center gap-2">
+                <i data-lucide="message-circle" class="w-5 h-5 text-green-500"></i>WhatsApp Now
+              </a>
+            </div>
+          </div>
+          
+          <div class="reveal">
+            <form id="contactForm" class="bg-white border border-gray-200 shadow-xl shadow-gray-200/50 rounded-2xl p-8 space-y-6">
+              <h3 class="font-heading font-bold text-2xl text-dark mb-4">Send us a Message</h3>
+              <div>
+                <label for="cf-name" class="text-gray-600 font-semibold text-sm block mb-2">Full Name</label>
+                <input id="cf-name" type="text" required class="w-full bg-light border border-gray-200 rounded-lg px-4 py-3.5 text-dark text-sm placeholder-gray-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition" placeholder="Your name">
+              </div>
+              <div>
+                <label for="cf-email" class="text-gray-600 font-semibold text-sm block mb-2">Email</label>
+                <input id="cf-email" type="email" required class="w-full bg-light border border-gray-200 rounded-lg px-4 py-3.5 text-dark text-sm placeholder-gray-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition" placeholder="you@example.com">
+              </div>
+              <div>
+                <label for="cf-phone" class="text-gray-600 font-semibold text-sm block mb-2">Phone</label>
+                <input id="cf-phone" type="tel" class="w-full bg-light border border-gray-200 rounded-lg px-4 py-3.5 text-dark text-sm placeholder-gray-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition" placeholder="+91 xxxxxxxxxx">
+              </div>
+              <div>
+                <label for="cf-msg" class="text-gray-600 font-semibold text-sm block mb-2">Message</label>
+                <textarea id="cf-msg" rows="4" required class="w-full bg-light border border-gray-200 rounded-lg px-4 py-3.5 text-dark text-sm placeholder-gray-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition resize-none" placeholder="How can we help you?"></textarea>
+              </div>
+              <button type="submit" class="w-full bg-brand hover:bg-brand-dark text-white font-bold py-4 rounded-lg shadow-md transition text-base">Send Message</button>
+              <p id="formMsg" class="text-center font-medium text-sm hidden"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-light border-t border-gray-200 py-16 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+          <div class="lg:col-span-2">
+            <div class="flex items-center gap-3 mb-6">
+              <img src="logo-cmfilings.png" alt="CM Filings Logo" class="h-10 w-auto object-contain drop-shadow-sm">
+              <span class="font-heading text-xl text-dark"><span class="font-normal">CM</span> <span class="font-bold">Filings</span></span>
+            </div>
+            <p id="footerText" class="text-gray-600 text-sm leading-relaxed max-w-sm">CM Filings – Experts in Tax & Business Compliance. Your trusted partner for seamless financial growth.</p>
+            <div class="flex gap-4 mt-8">
+              <a href="#" class="w-10 h-10 bg-white border border-gray-200 hover:bg-brand hover:border-brand rounded-lg flex items-center justify-center transition group" aria-label="Facebook">
+                <i data-lucide="facebook" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-white border border-gray-200 hover:bg-brand hover:border-brand rounded-lg flex items-center justify-center transition group" aria-label="Instagram">
+                <i data-lucide="instagram" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-white border border-gray-200 hover:bg-brand hover:border-brand rounded-lg flex items-center justify-center transition group" aria-label="Twitter">
+                <i data-lucide="twitter" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-white border border-gray-200 hover:bg-brand hover:border-brand rounded-lg flex items-center justify-center transition group" aria-label="LinkedIn">
+                <i data-lucide="linkedin" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-dark text-base mb-6">Quick Links</h4>
+            <div class="flex flex-col gap-3">
+              <a href="#hero" class="text-gray-500 font-medium hover:text-brand text-sm transition">Home</a>
+              <a href="#about" class="text-gray-500 font-medium hover:text-brand text-sm transition">About</a>
+              <a href="#services" class="text-gray-500 font-medium hover:text-brand text-sm transition">Services</a>
+              <a href="#career" class="text-gray-500 font-medium hover:text-brand text-sm transition">Career</a>
+              <a href="#contact" class="text-gray-500 font-medium hover:text-brand text-sm transition">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-dark text-base mb-6">Legal & Policies</h4>
+            <div class="flex flex-col gap-3">
+              <a href="policy.html" class="text-gray-500 font-medium hover:text-brand text-sm transition">Privacy Policy</a>
+              <a href="#" class="text-gray-500 font-medium hover:text-brand text-sm transition">Terms & Conditions</a>
+              <a href="#" class="text-gray-500 font-medium hover:text-brand text-sm transition">Cancellation & Refund Policy</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-dark text-base mb-6">Contact</h4>
+            <div class="flex flex-col gap-3">
+              <a href="mailto:info@cmfilings.com" class="text-gray-500 font-medium hover:text-brand text-sm transition">info@cmfilings.com</a>
+              <a href="mailto:support@cmfilings.com" class="text-gray-500 font-medium hover:text-brand text-sm transition">support@cmfilings.com</a>
+              <a href="mailto:gst@cmfilings.com" class="text-gray-500 font-medium hover:text-brand text-sm transition">gst@cmfilings.com</a>
+              <a href="mailto:career@cmfilings.com" class="text-gray-500 font-medium hover:text-brand text-sm transition">career@cmfilings.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-200 pt-8 text-center flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p class="text-gray-400 font-medium text-sm">© 2026 CM Filings. All rights reserved.</p>
+          <p class="text-gray-400 font-medium text-sm flex items-center gap-1">Designed and Developed by <span class="font-bold text-dark">Codit.</span></p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <a href="https://wa.me/919946151111?text=Hi,%20I%20Need%20to%20File%20my%20ITR.%20Need%20Help." target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" viewbox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a> 
+
+  <button id="scrollTop" aria-label="Scroll to top"><i data-lucide="chevron-up" class="w-6 h-6"></i></button>
+
+  <script>
+    // Content Data
+    const services = [
+      { icon: 'file-signature', title: 'Income Tax Returns', desc: 'Filing, planning, and advisory for individuals & businesses.' },
+      { icon: 'file-text', title: 'GST Registration & Compliance', desc: 'Complete GST registration, returns, and compliance management.' },
+      { icon: 'shield', title: 'Trademark Registration', desc: 'Protect your brand with trademark registration and IP services.' },
+      { icon: 'building', title: 'Business Registration', desc: 'Company incorporation, LLP, partnership & sole proprietorship setup.' },
+      { icon: 'clipboard-list', title: 'ROC Compliance', desc: 'Annual filings, board resolutions, and statutory compliance.' },
+      { icon: 'calculator', title: 'Accounting & Bookkeeping', desc: 'Accurate financial records and bookkeeping services.' },
+      { icon: 'scale', title: 'Legal & Other Compliances', desc: 'Labour law, FSSAI, MSME, and other regulatory compliances.' },
+      { icon: 'users', title: 'Consultancy Support', desc: 'Expert business consulting for growth and compliance.' },
+      { icon: 'rocket', title: 'Startup Registration', desc: 'Startup India registration and DPIIT recognition support.' },
+      { icon: 'globe', title: 'UAE Support Services', desc: 'Business setup, VAT, and compliance support in the UAE.' }
+    ];
+
+    const whyData = [
+      { icon: 'award', title: 'Trusted Since 2009', desc: '15+ years of proven expertise and reliability.' },
+      { icon: 'brain', title: 'Expert Guidance', desc: 'Qualified professionals with deep domain knowledge.' },
+      { icon: 'zap', title: 'Fast Response', desc: 'Quick turnaround and responsive communication.' },
+      { icon: 'indian-rupee', title: 'Affordable Pricing', desc: 'Transparent and competitive pricing for all services.' },
+      { icon: 'layers', title: 'End to End Support', desc: 'Complete lifecycle support from start to finish.' },
+      { icon: 'monitor', title: 'Online & Offline Service', desc: 'Flexible service delivery — wherever you are.' }
+    ];
+
+    const testimonials = [
+      { name: 'Mrs. Sreekala', role: 'Centre Head, Pondichery University', text: 'Very prompt and quick disposal assignment.' },
+      { name: 'Miss Akshara', role: 'US Stocks Trader | New Client', text: 'Me and my brother were searching for a good Tax consultant to file our ITR but we couldn\'t find anyone who can file US stock and Crypto. Thankfully the CM team helped us file them correctly, very reliable, I will recommend to all.' },
+      { name: 'Mr. Fajinas', role: 'M/s Truewell Marketing | Long Term Client', text: 'I\'ve been using CM Tax Experts for my GST filing since 2017, and their service has always been exceptional. They\'re knowledgeable, efficient, and truly reliable. Their team handles everything with professionalism and ensures compliance without any hassle. Highly recommend CM Tax Experts to anyone looking for trusted GST and tax filing services!' },
+      { name: 'Mr. Ali Himmathi', role: 'From Pune, Maharashtra | Long Term Client', text: 'CM TAX EXPERTS ARE THE BEST! Been with them since 5 years now. Fast, reliable plus right suggestions and pathway for the filing of taxes and other services as well. One stop solution for all.' }
+    ];
+
+    const faqs = [
+      { q: 'What services does CM Filings offer?', a: 'We provide income tax filing, GST registration, business registration, trademark, ROC compliance, bookkeeping, and consultancy services across India and UAE.' },
+      { q: 'How can I get started?', a: 'Simply click "Get Started" or reach us on WhatsApp at +91 9946151111. Our team will guide you through the process.' },
+      { q: 'Do you serve clients outside Kerala?', a: 'Yes! We serve clients across all of India and the UAE with our online and offline service model.' },
+      { q: 'What are your charges?', a: 'Our pricing is transparent and competitive. Contact us for a free consultation and customized quote.' }
+    ];
+
+    // Overlay Controls
+    function closeWelcome() {
+      const el = document.getElementById('welcomeOverlay');
+      el.style.opacity = '0';
+      setTimeout(() => el.remove(), 500);
+    }
+
+    function closeUpdate() {
+      const toast = document.getElementById('updateToast');
+      toast.classList.add('translate-y-40', 'opacity-0');
+      setTimeout(() => toast.remove(), 600);
+    }
+
+    // Render Data
+    document.getElementById('servicesGrid').innerHTML = services.map(s => `
+      <div class="service-card bg-white rounded-2xl p-8 border border-gray-100 shadow-sm reveal transition hover:-translate-y-1 hover:shadow-md hover:border-brand/30">
+        <div class="w-14 h-14 bg-brand/10 rounded-xl flex items-center justify-center mb-6"><i data-lucide="${s.icon}" class="w-7 h-7 text-brand"></i></div>
+        <h3 class="font-heading font-bold text-dark text-lg mb-3">${s.title}</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-6">${s.desc}</p>
+        <a href="#contact" class="text-brand text-sm font-bold hover:underline flex items-center gap-1 group">Learn More <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i></a>
+      </div>`).join('');
+
+    document.getElementById('whyGrid').innerHTML = whyData.map(w => `
+      <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-8 reveal transition hover:-translate-y-1 hover:shadow-md hover:border-brand/30">
+        <div class="w-14 h-14 bg-brand/10 rounded-xl flex items-center justify-center mb-6"><i data-lucide="${w.icon}" class="w-7 h-7 text-brand"></i></div>
+        <h3 class="font-heading font-bold text-dark text-lg mb-3">${w.title}</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">${w.desc}</p>
+      </div>`).join('');
+
+    document.getElementById('testimonialTrack').innerHTML = testimonials.map(t => `
+      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-4 flex">
+        <div class="bg-white border border-gray-200 shadow-sm rounded-2xl p-8 w-full flex flex-col justify-between">
+          <div>
+            <div class="flex gap-1 mb-5">${'<i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>'.repeat(5)}</div>
+            <p class="text-gray-600 text-base leading-relaxed mb-8 italic">"${t.text}"</p>
+          </div>
+          <div class="flex items-center gap-4 mt-auto">
+            <div class="w-12 h-12 bg-brand rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md shrink-0">${t.name[0]}</div>
+            <div><p class="text-dark font-bold text-base leading-tight">${t.name}</p><p class="text-gray-500 font-medium text-xs uppercase tracking-wide mt-1">${t.role}</p></div>
+          </div>
+        </div>
+      </div>`).join('');
+
+    document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:border-gray-300 transition">
+        <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between p-6 text-left focus:outline-none" aria-expanded="false">
+          <span class="font-heading font-bold text-dark text-base pr-4">${f.q}</span>
+          <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 flex-shrink-0 faq-icon transition-transform" id="faqIcon${i}"></i>
+        </button>
+        <div class="faq-answer px-6 bg-gray-50" id="faqA${i}"><p class="text-gray-600 text-sm pt-2 pb-6 leading-relaxed">${f.a}</p></div>
+      </div>`).join('');
+
+    function toggleFaq(i) {
+      const a = document.getElementById('faqA' + i);
+      const ic = document.getElementById('faqIcon' + i);
+      a.classList.toggle('open');
+      ic.style.transform = a.classList.contains('open') ? 'rotate(180deg)' : '';
+    }
+
+    let tIdx = 0;
+    function moveTestimonial(dir) {
+      const cards = testimonials.length;
+      tIdx = (tIdx + dir + cards) % cards;
+      let w = 100;
+      if (window.innerWidth >= 1024) w = 33.333;
+      else if (window.innerWidth >= 768) w = 50;
+      document.getElementById('testimonialTrack').style.transform = `translateX(-${tIdx * w}%)`;
+    }
+
+    function animateCounters() {
+      document.querySelectorAll('.counter-num').forEach(el => {
+        const target = +el.dataset.target;
+        if (!target || el.dataset.done) return;
+        if (el.getBoundingClientRect().top > window.innerHeight) return;
+        el.dataset.done = '1';
+        let cur = 0;
+        const step = Math.max(1, Math.floor(target / 60));
+        const int = setInterval(() => {
+          cur += step;
+          if (cur >= target) { cur = target; clearInterval(int); }
+          el.textContent = cur >= 1000 ? (cur / 1000).toFixed(0) + 'K' : cur;
+        }, 25);
+      });
+    }
+
+    function checkReveals() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 80) el.classList.add('active');
+      });
+    }
+
+    // Scroll handling
+    const navbar = document.getElementById('navbar');
+    function handleScroll() {
+      const scrolled = (document.querySelector('#app-wrapper')?.scrollTop || 0) > 20;
+      navbar.classList.toggle('scrolled', scrolled);
+      const st = document.getElementById('scrollTop');
+      st.classList.toggle('show', (document.querySelector('#app-wrapper')?.scrollTop || 0) > 400);
+      animateCounters();
+      checkReveals();
+    }
+
+    document.getElementById('scrollTop').addEventListener('click', () => {
+      document.querySelector('#app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Mobile Menu & Contact Form
+    document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
+    document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open')));
+    
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const msg = document.getElementById('formMsg');
+      msg.textContent = '✓ Message sent successfully! We\'ll get back to you soon.';
+      msg.className = 'text-center text-sm font-bold text-green-600 mt-4';
+      msg.classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => msg.classList.add('hidden'), 4000);
+    });
+
+    // Initialization Sequence
+    const wrapper = document.querySelector('#app-wrapper');
+    wrapper.addEventListener('scroll', handleScroll);
+    lucide.createIcons();
+    checkReveals();
+    animateCounters();
+
+    // Remove Loader, Show Welcome Message, and Trigger Toast
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+        setTimeout(() => {
+          const welcome = document.getElementById('welcomeOverlay');
+          if(welcome) welcome.classList.add('show');
+          
+          // Show the floating Toast notification 3 seconds after loader finishes
+          setTimeout(() => {
+            const toast = document.getElementById('updateToast');
+            if(toast) {
+              toast.classList.remove('translate-y-40', 'opacity-0');
+            }
+          }, 3000);
+
+        }, 300);
+      }, 1200); 
+    });
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker Registered!', reg))
+          .catch(err => console.error('Service Worker Registration Failed!', err));
+      });
+    }
+  </script>
+</body>
+</html>
