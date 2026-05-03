@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nua Couture | Elegant Modest Fashion</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Cormorant+Garamond:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#5c564c',       /* Dark taupe/brown from logo */
+            'brand-light': '#8d8678', /* Lighter swoop color from logo */
+            'brand-accent': '#a8a296',
+            cream: '#fcfbf9',
+            'cream-dark': '#f3f0ea',
+            charcoal: '#212121'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .amiri { font-family: 'Amiri', serif; }
+    .cormorant { font-family: 'Cormorant Garamond', serif; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.8s ease forwards; }
+    .fade-up-d1 { animation-delay: 0.2s; opacity: 0; }
+    .fade-up-d2 { animation-delay: 0.4s; opacity: 0; }
+    .fade-up-d3 { animation-delay: 0.6s; opacity: 0; }
+    
+    .product-card:hover .product-img { transform: scale(1.08); }
+    .product-card:hover .quick-add { transform: translateY(0); opacity: 1; }
+    .quick-add { transform: translateY(10px); opacity: 0; transition: all 0.3s ease; }
+    
+    .geometric-pattern {
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(92, 86, 76, 0.03) 35px, rgba(92, 86, 76, 0.03) 36px),
+                        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(92, 86, 76, 0.03) 35px, rgba(92, 86, 76, 0.03) 36px);
+    }
+    
+    /* Ensure mobile nav area doesn't cover footer content */
+    .app-container {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="w-full h-full overflow-auto bg-cream pb-16 md:pb-0 app-container">
+   
+   <div class="bg-brand text-cream text-[11px] py-1.5 px-6 flex justify-between items-center uppercase tracking-widest font-semibold">
+    <a href="https://www.nuacouture.com" class="hover:text-cream-dark transition-colors">www.nuacouture.com</a>
+    <div class="flex items-center gap-4">
+     <div class="flex items-center gap-2">
+      <i data-lucide="globe" class="w-3 h-3"></i>
+      <select class="bg-transparent border-none outline-none cursor-pointer appearance-none text-center">
+       <option class="text-charcoal" value="UAE">🇦🇪 UAE (AED)</option>
+       <option class="text-charcoal" value="IND">🇮🇳 INDIA (INR)</option>
+      </select>
+     </div>
+    </div>
+   </div>
+
+   <nav class="sticky top-0 z-40 bg-cream/95 backdrop-blur-md border-b border-brand/10 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-4">
+      <div class="w-14 h-14 rounded-full border border-brand/20 flex items-center justify-center bg-white shadow-sm">
+       <span class="amiri text-brand text-2xl font-bold" dir="rtl">نوا</span>
+      </div>
+      <div>
+       <h1 class="cormorant text-brand text-2xl font-semibold tracking-widest uppercase">Nua Couture</h1>
+       <p class="text-brand-light text-[9px] tracking-[4px] uppercase font-semibold">Ladies Boutique</p>
+      </div>
+     </div>
+     <div class="hidden md:flex items-center gap-8">
+      <a href="#shop" class="text-brand hover:text-brand-light text-sm tracking-widest uppercase transition-colors font-medium">Shop Pardhas</a> 
+      <a href="#about" class="text-brand hover:text-brand-light text-sm tracking-widest uppercase transition-colors font-medium">About</a> 
+      <a href="#contact" class="text-brand hover:text-brand-light text-sm tracking-widest uppercase transition-colors font-medium">Contact</a> 
+      
+      <div class="flex items-center gap-4 border-l border-brand/20 pl-6">
+       <button class="text-brand hover:text-brand-light transition-colors relative">
+        <i data-lucide="search" class="w-5 h-5"></i>
+       </button>
+       <button class="text-brand hover:text-brand-light transition-colors relative">
+        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+        <span class="absolute -top-1 -right-1 bg-brand text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+       </button>
+      </div>
+     </div>
+     <div class="flex items-center gap-4 md:hidden">
+      <button class="text-brand relative">
+       <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+      <button id="mobile-menu-btn" class="text-brand"><i data-lucide="menu"></i></button>
+     </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-3 bg-cream border-t border-brand/10 pt-4">
+     <a href="#shop" class="block text-brand text-sm tracking-widest uppercase">Shop Pardhas</a> 
+     <a href="#about" class="block text-brand text-sm tracking-widest uppercase">About</a> 
+     <a href="#contact" class="block text-brand text-sm tracking-widest uppercase">Contact</a>
+    </div>
+   </nav>
+
+   <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 px-6 overflow-hidden geometric-pattern">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+     <div class="relative z-10 text-center md:text-left order-2 md:order-1">
+      <div class="amiri text-brand/10 text-8xl md:text-9xl mb-2 absolute left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 -top-16 -z-10 select-none" dir="rtl">
+       نوا
+      </div>
+      <p class="text-brand-light text-xs tracking-[5px] uppercase mb-4 fade-up font-semibold">New Arrivals</p>
+      <h2 id="hero-title" class="cormorant text-brand text-5xl md:text-7xl font-medium mb-6 fade-up fade-up-d1 leading-[1.1]">Elevate Your Modesty with Signature Pardhas</h2>
+      <p id="hero-subtitle" class="text-brand/70 text-lg md:text-xl max-w-md mx-auto md:mx-0 mb-10 fade-up fade-up-d2">Discover our best-selling online boutique collection. Delivered gracefully across UAE & India.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 fade-up fade-up-d3">
+       <a href="#shop" class="w-full sm:w-auto bg-brand text-cream px-10 py-4 hover:bg-brand-light transition-colors cormorant text-xl tracking-wide uppercase shadow-lg">Shop The Collection</a>
+      </div>
+     </div>
+     
+     <div class="relative order-1 md:order-2 fade-up fade-up-d1 px-4 md:px-0">
+      <div class="relative w-full aspect-[4/5] md:h-[650px] max-w-md mx-auto md:max-w-none rounded-t-[1000px] overflow-hidden shadow-2xl border-[6px] border-white/50 bg-cream-dark">
+       <img src="https://images.unsplash.com/photo-1589467295847-1f48fa13ac02?q=80&w=1000&auto=format&fit=crop" alt="Model wearing elegant Nua Couture pardha" class="w-full h-full object-cover object-top" />
+       <div class="absolute inset-0 bg-gradient-to-t from-brand/30 to-transparent"></div>
+      </div>
+      <div class="absolute -bottom-6 -left-6 w-32 h-32 rounded-full border border-brand/20 -z-10 hidden md:block"></div>
+      <div class="absolute top-1/4 -right-8 w-24 h-24 rounded-full border border-brand/10 -z-10 hidden md:block"></div>
+     </div>
+    </div>
+   </section>
+
+   <section id="shop" class="py-24 px-4 md:px-8 bg-white/80">
+    <div class="max-w-7xl mx-auto">
+     <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 text-center md:text-left gap-4">
+      <div>
+       <p class="text-brand-light text-xs tracking-[3px] uppercase font-semibold mb-2">Online Store</p>
+       <h3 class="cormorant text-brand text-4xl md:text-5xl font-semibold">Best Selling Pardhas</h3>
+      </div>
+      <a href="#" class="hidden md:flex items-center gap-2 text-brand text-sm uppercase tracking-widest hover:text-brand-light transition-colors border-b border-brand pb-1">View All <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+     </div>
+     
+     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8 md:gap-y-16">
+      
+      <div class="product-card group cursor-pointer flex flex-col">
+       <div class="relative aspect-[3/4] bg-cream-dark overflow-hidden mb-5">
+        <img src="https://images.unsplash.com/photo-1589467389832-6a7e0f2f3923?q=80&w=800&auto=format&fit=crop" alt="Dubai Premium Silk Pardha" class="product-img w-full h-full object-cover transition-transform duration-1000">
+        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-brand text-[10px] uppercase tracking-widest px-2.5 py-1.5 shadow-sm font-semibold">Bestseller</div>
+        <div class="absolute inset-x-0 bottom-0 p-4 quick-add hidden md:block">
+         <button class="w-full bg-white/95 backdrop-blur text-brand py-3.5 text-sm font-semibold uppercase tracking-widest hover:bg-brand hover:text-white transition-colors border border-brand/10 shadow-xl flex items-center justify-center gap-2">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Cart
+         </button>
+        </div>
+       </div>
+       <div class="flex-grow flex flex-col justify-between">
+        <div>
+         <h4 class="cormorant text-brand text-xl md:text-2xl font-medium leading-tight mb-1">Dubai Premium Silk Pardha</h4>
+         <p class="text-brand-light text-sm">Classic Black</p>
+        </div>
+        <div class="mt-3 flex items-center justify-between">
+         <div class="flex items-center gap-3">
+          <span class="text-brand font-semibold text-lg md:text-xl">AED 198</span>
+          <span class="text-brand-light/60 text-sm line-through">250</span>
+         </div>
+         <button class="md:hidden bg-brand text-white p-2 rounded-sm shadow-md"><i data-lucide="shopping-bag" class="w-4 h-4"></i></button>
+        </div>
+       </div>
+      </div>
+
+      <div class="product-card group cursor-pointer flex flex-col">
+       <div class="relative aspect-[3/4] bg-cream-dark overflow-hidden mb-5">
+        <img src="https://images.unsplash.com/photo-1583391265517-355bf802e213?q=80&w=800&auto=format&fit=crop" alt="Pleated Chiffon Abaya Set" class="product-img w-full h-full object-cover object-top transition-transform duration-1000">
+        <div class="absolute inset-x-0 bottom-0 p-4 quick-add hidden md:block">
+         <button class="w-full bg-white/95 backdrop-blur text-brand py-3.5 text-sm font-semibold uppercase tracking-widest hover:bg-brand hover:text-white transition-colors border border-brand/10 shadow-xl flex items-center justify-center gap-2">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Cart
+         </button>
+        </div>
+       </div>
+       <div class="flex-grow flex flex-col justify-between">
+        <div>
+         <h4 class="cormorant text-brand text-xl md:text-2xl font-medium leading-tight mb-1">Pleated Chiffon Abaya Set</h4>
+         <p class="text-brand-light text-sm">Taupe / Mocha</p>
+        </div>
+        <div class="mt-3 flex items-center justify-between">
+         <span class="text-brand font-semibold text-lg md:text-xl">AED 245</span>
+         <button class="md:hidden bg-brand text-white p-2 rounded-sm shadow-md"><i data-lucide="shopping-bag" class="w-4 h-4"></i></button>
+        </div>
+       </div>
+      </div>
+
+      <div class="product-card group cursor-pointer flex flex-col">
+       <div class="relative aspect-[3/4] bg-cream-dark overflow-hidden mb-5">
+        <img src="https://images.unsplash.com/photo-1623348002677-4b71ff6c9535?q=80&w=800&auto=format&fit=crop" alt="French Crepe Jilbab" class="product-img w-full h-full object-cover object-top transition-transform duration-1000">
+        <div class="absolute inset-x-0 bottom-0 p-4 quick-add hidden md:block">
+         <button class="w-full bg-white/95 backdrop-blur text-brand py-3.5 text-sm font-semibold uppercase tracking-widest hover:bg-brand hover:text-white transition-colors border border-brand/10 shadow-xl flex items-center justify-center gap-2">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Cart
+         </button>
+        </div>
+       </div>
+       <div class="flex-grow flex flex-col justify-between">
+        <div>
+         <h4 class="cormorant text-brand text-xl md:text-2xl font-medium leading-tight mb-1">French Crepe Jilbab</h4>
+         <p class="text-brand-light text-sm">Navy Blue</p>
+        </div>
+        <div class="mt-3 flex items-center justify-between">
+         <span class="text-brand font-semibold text-lg md:text-xl">AED 185</span>
+         <button class="md:hidden bg-brand text-white p-2 rounded-sm shadow-md"><i data-lucide="shopping-bag" class="w-4 h-4"></i></button>
+        </div>
+       </div>
+      </div>
+
+      <div class="product-card group cursor-pointer flex flex-col">
+       <div class="relative aspect-[3/4] bg-cream-dark overflow-hidden mb-5">
+        <img src="https://images.unsplash.com/photo-1610419207601-a53f1f3a5eb4?q=80&w=800&auto=format&fit=crop" alt="Embroidered Nida Pardha" class="product-img w-full h-full object-cover transition-transform duration-1000">
+        <div class="absolute top-3 left-3 bg-brand text-white text-[10px] uppercase tracking-widest px-2.5 py-1.5 shadow-sm font-semibold">Sale</div>
+        <div class="absolute inset-x-0 bottom-0 p-4 quick-add hidden md:block">
+         <button class="w-full bg-white/95 backdrop-blur text-brand py-3.5 text-sm font-semibold uppercase tracking-widest hover:bg-brand hover:text-white transition-colors border border-brand/10 shadow-xl flex items-center justify-center gap-2">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Cart
+         </button>
+        </div>
+       </div>
+       <div class="flex-grow flex flex-col justify-between">
+        <div>
+         <h4 class="cormorant text-brand text-xl md:text-2xl font-medium leading-tight mb-1">Embroidered Nida Pardha</h4>
+         <p class="text-brand-light text-sm">Olive Green</p>
+        </div>
+        <div class="mt-3 flex items-center justify-between">
+         <div class="flex items-center gap-3">
+          <span class="text-brand font-semibold text-lg md:text-xl">AED 198</span>
+          <span class="text-brand-light/60 text-sm line-through">299</span>
+         </div>
+         <button class="md:hidden bg-brand text-white p-2 rounded-sm shadow-md"><i data-lucide="shopping-bag" class="w-4 h-4"></i></button>
+        </div>
+       </div>
+      </div>
+     </div>
+     
+     <div class="mt-16 text-center md:hidden">
+      <a href="#" class="inline-flex items-center justify-center w-full py-4 bg-brand/5 text-brand text-sm uppercase tracking-widest hover:bg-brand hover:text-white transition-colors border border-brand/20 font-semibold">View All Collections</a>
+     </div>
+    </div>
+   </section>
+
+   <section class="py-16 px-6 bg-brand text-cream">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
+     <div class="pt-8 md:pt-0">
+      <i data-lucide="gem" class="w-8 h-8 mx-auto mb-4 text-brand-light"></i>
+      <h4 class="cormorant text-xl mb-1 font-semibold uppercase tracking-wide">Boutique Quality</h4>
+      <p class="text-cream/60 text-sm font-light">Premium fabrics & finish</p>
+     </div>
+     <div class="pt-8 md:pt-0">
+      <i data-lucide="truck" class="w-8 h-8 mx-auto mb-4 text-brand-light"></i>
+      <h4 class="cormorant text-xl mb-1 font-semibold uppercase tracking-wide">Global Shipping</h4>
+      <p class="text-cream/60 text-sm font-light">Available in UAE & India</p>
+     </div>
+     <div class="pt-8 md:pt-0">
+      <i data-lucide="shield-check" class="w-8 h-8 mx-auto mb-4 text-brand-light"></i>
+      <h4 class="cormorant text-xl mb-1 font-semibold uppercase tracking-wide">Secure Payments</h4>
+      <p class="text-cream/60 text-sm font-light">100% safe checkout</p>
+     </div>
+     <div class="pt-8 md:pt-0">
+      <i data-lucide="headphones" class="w-8 h-8 mx-auto mb-4 text-brand-light"></i>
+      <h4 class="cormorant text-xl mb-1 font-semibold uppercase tracking-wide">Styling Support</h4>
+      <p class="text-cream/60 text-sm font-light">Dedicated customer care</p>
+     </div>
+    </div>
+   </section>
+
+   <section id="about" class="py-24 px-6 bg-cream">
+    <div class="max-w-4xl mx-auto text-center">
+     <div class="w-16 h-16 mx-auto border border-brand/20 rounded-full flex items-center justify-center mb-6 bg-white shadow-sm">
+      <span class="amiri text-brand text-2xl" dir="rtl">نوا</span>
+     </div>
+     <h3 class="cormorant text-brand text-4xl mb-6 font-semibold uppercase tracking-widest">Our Legacy</h3>
+     <p class="text-brand/70 leading-loose max-w-2xl mx-auto font-light text-lg">
+      Nua Couture represents the pinnacle of modest fashion, bridging the gap between traditional values and contemporary elegance. Operating proudly across India and the UAE, our boutique curates exceptional pardhas, abayas, and niqabs utilizing exquisite craftsmanship.
+     </p>
+    </div>
+   </section>
+
+   <footer class="bg-[#1a1917] text-white py-16 px-6 border-t border-brand/20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+     <div class="col-span-1 md:col-span-2">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/5">
+        <span class="amiri text-brand-light text-2xl font-bold" dir="rtl">نوا</span>
+       </div>
+       <span class="cormorant text-white text-2xl font-semibold uppercase tracking-widest">Nua Couture</span>
+      </div>
+      <p class="text-white/50 text-sm leading-relaxed max-w-sm mb-6">
+       Premium ladies boutique specializing in luxury modest wear, pardhas, and abayas. Bringing elegance to your everyday wardrobe.
+      </p>
+      <div class="flex gap-4">
+       <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:bg-brand hover:text-white transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a> 
+       <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:bg-brand hover:text-white transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a> 
+       <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/70 hover:bg-brand hover:text-white transition-colors"><i data-lucide="mail" class="w-4 h-4"></i></a>
+      </div>
+     </div>
+     
+     <div>
+      <h4 class="cormorant text-lg font-semibold uppercase tracking-widest mb-6 text-brand-light">Shop</h4>
+      <ul class="space-y-3 text-sm text-white/50">
+       <li><a href="#" class="hover:text-white transition-colors">Pardha Collection</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Luxury Abayas</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Premium Niqabs</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">New Arrivals</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Sale</a></li>
+      </ul>
+     </div>
+
+     <div>
+      <h4 class="cormorant text-lg font-semibold uppercase tracking-widest mb-6 text-brand-light">Support</h4>
+      <ul class="space-y-3 text-sm text-white/50">
+       <li><a href="#" class="hover:text-white transition-colors">Track Order</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Shipping Info</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Return Policy</a></li>
+       <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+      </ul>
+     </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40 uppercase tracking-widest">
+     <p>© 2024 Nua Couture Boutique. All rights reserved.</p>
+     <div class="flex gap-4">
+      <span>INR / AED Accepted</span>
+      <a href="https://www.nuacouture.com" class="hover:text-brand-light transition-colors">www.nuacouture.com</a>
+     </div>
+    </div>
+   </footer>
+
+   <nav class="md:hidden fixed bottom-0 left-0 w-full bg-cream/98 backdrop-blur-xl border-t border-brand/15 z-50 px-6 py-3 flex justify-between items-center pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.1)]">
+    <a href="#" class="flex flex-col items-center text-brand">
+     <i data-lucide="home" class="w-5 h-5 mb-1.5"></i>
+     <span class="text-[9px] uppercase tracking-widest font-bold">Home</span>
+    </a>
+    <a href="#shop" class="flex flex-col items-center text-brand/50 hover:text-brand transition-colors">
+     <i data-lucide="grid" class="w-5 h-5 mb-1.5"></i>
+     <span class="text-[9px] uppercase tracking-widest font-semibold">Shop</span>
+    </a>
+    <a href="#" class="flex flex-col items-center text-brand/50 hover:text-brand transition-colors relative">
+     <div class="relative">
+      <i data-lucide="shopping-bag" class="w-5 h-5 mb-1.5"></i>
+      <span class="absolute -top-1.5 -right-2.5 bg-brand text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-sm">2</span>
+     </div>
+     <span class="text-[9px] uppercase tracking-widest font-semibold">Cart</span>
+    </a>
+    <a href="#" class="flex flex-col items-center text-brand/50 hover:text-brand transition-colors">
+     <i data-lucide="heart" class="w-5 h-5 mb-1.5"></i>
+     <span class="text-[9px] uppercase tracking-widest font-semibold">Saved</span>
+    </a>
+    <a href="#" class="flex flex-col items-center text-brand/50 hover:text-brand transition-colors">
+     <i data-lucide="user" class="w-5 h-5 mb-1.5"></i>
+     <span class="text-[9px] uppercase tracking-widest font-semibold">Profile</span>
+    </a>
+   </nav>
+
+  </div>
+  
+  <script>
+  const defaultConfig = {
+    hero_title: "Elevate Your Modesty with Signature Pardhas",
+    hero_subtitle: "Discover our best-selling online boutique collection. Delivered gracefully across UAE & India.",
+    background_color: "#fcfbf9",
+    surface_color: "#ffffff",
+    text_color: "#5c564c",
+    primary_action_color: "#5c564c",
+    secondary_action_color: "#8d8678",
+    font_family: "Cormorant Garamond",
+    font_size: 16
+  };
+
+  function applyConfig(config) {
+    document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+    document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+
+    const root = document.getElementById('app');
+    root.style.backgroundColor = config.background_color || defaultConfig.background_color;
+
+    document.querySelectorAll('.cormorant').forEach(el => {
+      el.style.fontFamily = `${config.font_family || defaultConfig.font_family}, serif`;
+    });
+  }
+
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => applyConfig(config),
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+        { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+      ],
+      borderables: [],
+      fontEditable: {
+        get: () => config.font_family || defaultConfig.font_family,
+        set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+      },
+      fontSizeable: {
+        get: () => config.font_size || defaultConfig.font_size,
+        set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+      }
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ["hero_title", config.hero_title || defaultConfig.hero_title],
+      ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle]
+    ])
+  });
+
+  // Mobile menu
+  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+
+  lucide.createIcons();
+</script>
+ </body>
+</html>
